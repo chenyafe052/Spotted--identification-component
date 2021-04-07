@@ -13,8 +13,8 @@ def yolo_detect(im=None,
                 weights_path='./cfg/yolov4-obj_best.weights',
                 confidence_thre=0.5,
                 nms_thre=0.3):
-    LABELS = open(label_path).read().strip().split("\n")
-    nclass = len(LABELS)
+    labels = open(label_path).read().strip().split("\n")
+    nclass = len(labels)
     np.random.seed(42)
     COLORS = np.random.randint(0, 255, size=(nclass, 3), dtype='uint8')
     if pathIn == None:
@@ -55,7 +55,8 @@ def yolo_detect(im=None,
     idxs = cv2.dnn.NMSBoxes(boxes, confidences, confidence_thre, nms_thre)
     lab = []
     loc = []
-    data={}
+    resultdata=[]
+    data = {}
     data["filename"]=filename
     data["counts"]=len(idxs)
     if len(idxs) > 0:
@@ -64,15 +65,16 @@ def yolo_detect(im=None,
             (w, h) = (boxes[i][2], boxes[i][3])
             color = [int(c) for c in COLORS[classIDs[i]]]
             cv2.rectangle(img, (x, y), (x + w, y + h), color, 2)
-            text = '{}: {:.3f}'.format(LABELS[classIDs[i]], confidences[i])
+            text = '{}: {:.3f}'.format(labels[classIDs[i]], confidences[i])
             (text_w, text_h), baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
             cv2.rectangle(img, (x, y-text_h-baseline), (x + text_w, y), color, -1)
             cv2.putText(img, text, (x, y-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2)
             text_inf = text + '' +'(' + str(x) +',' + str(y) +')' + '' + 'width:' + str(w) + 'height:' + str(h)
-            info = {"label":LABELS[classIDs[i]],"confidences":confidences[i],"x":str(x),"y":str(y),"w":str(w),"h":str(h)}
- 
-            data["data"+str(i)]=info
-            # print(filename,LABELS[classIDs[i]],confidences[i],str(x),str(y),str(w),str(h))
+            info = {'label':labels[classIDs[i]],"confidences":confidences[i],"x":str(x),"y":str(y),"w":str(w),"h":str(h)}
+            resultdata.append([info])
+            
+            data['data']=resultdata
+            # print(filename,labels[classIDs[i]],confidences[i],str(x),str(y),str(w),str(h))
             loc.append([x, y, w, h])
             lab.append(text_inf)
     res = jsonify(data)

@@ -14,18 +14,26 @@ import numpy as np
 from datetime import timedelta
 import yolov4
 
+#Delete befor deployment!!!!!!
+from flask_cors import CORS #comment this on deployment
+
+
 set_upload_path = 'images'
-set_result_path = 'out'
+set_result_path = 'output'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'bmp'])
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 app = Flask(__name__)
 app.send_file_max_age_default = timedelta(seconds=1)
+
+#Delete befor deployment!!!!!!
+CORS(app) #comment this on deployment
+
  #URLAddress
 @app.route('/', methods=['POST', 'GET'])
 def upload():
     if request.method == 'POST':
-        f = request.files['file']
+        f = request.files['image']
         if not (f and allowed_file(f.filename)):
             return jsonify({"error": 1001, "msg": "File type exception !"})
                  #t is the name of the obtained picture
