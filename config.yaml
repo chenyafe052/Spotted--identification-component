@@ -1,0 +1,5 @@
+---
+azure_storage_connectionstring: "DefaultEndpointsProtocol=https;AccountName=spottedphotos;AccountKey=lwGDyvIhHNImdRtofiN+GHSIVBuRe8FM80SduP/2TSx0tWBuS99nTsf7uirLOBkGyPkOOxuXxkEJsaTyi7OsOw==;EndpointSuffix=core.windows.net"
+videos_container_name: "video"
+pictures_container_name: "encountersraw"
+ident_container_name: "identified"

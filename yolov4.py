@@ -37,21 +37,21 @@ def yolo_detect(im=None,
     confidences = []
     classIDs = []
     for output in layerOutputs:
-    	for detection in output:
-    		scores = detection[5:]
-    		classID = np.argmax(scores)
-    		confidence = scores[classID]
-    		if confidence > confidence_thre:
-    			     # Restore the coordinates of the bounding box to match the original picture, remember that YOLO returns
-                                 # The center coordinates of the bounding box and the width and height of the bounding box
-    			box = detection[0:4] * np.array([W, H, W, H])
-    			(centerX, centerY, width, height) = box.astype("int")
-    			     # Calculate the position of the upper left corner of the bounding box
-    			x = int(centerX - (width / 2))
-    			y = int(centerY - (height / 2))
-    			boxes.append([x, y, int(width), int(height)])
-    			confidences.append(float(confidence))
-    			classIDs.append(classID)
+        for detection in output:
+            scores = detection[5:]
+            classID = np.argmax(scores)
+            confidence = scores[classID]
+            if confidence > confidence_thre:
+                 # Restore the coordinates of the bounding box to match the original picture, remember that YOLO returns
+                 # The center coordinates of the bounding box and the width and height of the bounding box
+                box = detection[0:4] * np.array([W, H, W, H])
+                (centerX, centerY, width, height) = box.astype("int")
+                 # Calculate the position of the upper left corner of the bounding box
+                x = int(centerX - (width / 2))
+                y = int(centerY - (height / 2))
+                boxes.append([x, y, int(width), int(height)])
+                confidences.append(float(confidence))
+                classIDs.append(classID)
     idxs = cv2.dnn.NMSBoxes(boxes, confidences, confidence_thre, nms_thre)
     lab = []
     loc = []
@@ -77,7 +77,8 @@ def yolo_detect(im=None,
             # print(filename,labels[classIDs[i]],confidences[i],str(x),str(y),str(w),str(h))
             loc.append([x, y, w, h])
             lab.append(text_inf)
-    res = jsonify(data)
+    #res = jsonify(data)
+    res = data
     return lab, img, loc, res
  
 # if __name__ == '__main__':
