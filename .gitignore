@@ -1,2 +1,8 @@
+#configuration for YOLO model
+cfg/yolov4-obj.cfg
+
+#weight file for Bluespotted detection
 cfg/*.weights
-__pycache__/
+
+#configuration for Azure-container
+config.yaml
