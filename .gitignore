@@ -6,3 +6,5 @@ cfg/*.weights
 
 #configuration for Azure-container
 *.yaml
+
+config.yaml
