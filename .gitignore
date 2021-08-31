@@ -5,4 +5,4 @@ cfg/*.cfg
 cfg/*.weights
 
 #configuration for Azure-container
-*.yaml
+*.yaml/
