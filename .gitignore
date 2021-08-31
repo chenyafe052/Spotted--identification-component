@@ -1,8 +1,8 @@
 #configuration for YOLO model
-cfg/*.cfg
+cfg/*.cfg/
 
 #weight file for Bluespotted detection
-cfg/*.weights
+cfg/*.weights/
 
 #configuration for Azure-container
 *.yaml/
